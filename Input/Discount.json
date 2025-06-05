@@ -7,7 +7,7 @@
   {
     "Campaign": "PercentageTotal",
     "DiscountType": "Coupon",
-    "DiscountAmount": 5
+    "DiscountAmount": "yes"
   },
   {
     "Campaign": "PercentageCat",

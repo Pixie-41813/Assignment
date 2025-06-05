@@ -11,7 +11,7 @@ namespace Assignment
     {
         static void Main(string[] args)
         {
-            Calculator cal = new Calculator();
+            Parameter cal = new Parameter();
             var DiscountPath = ConfigurationManager.AppSettings["InputPath"].ToString();
             cal.getListDiscount(DiscountPath);
         }

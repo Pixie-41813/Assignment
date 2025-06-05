@@ -12,5 +12,17 @@ namespace Assignment.Class
         public string DiscountType { get; set; }
         public int DiscountAmount { get; set; }
         public string Condition { get; set; }
+
+        public Dictionary<string, Type> DiscountParaType { get; }
+        public Discount()
+        {
+            DiscountParaType = new Dictionary<string, Type>
+            {
+                { nameof(Campaign),typeof(string)},
+                { nameof(DiscountType),typeof(string)},
+                { nameof(DiscountAmount),typeof(int)},
+                { nameof(Condition),typeof(string)},
+            };
+        }
     }
 }

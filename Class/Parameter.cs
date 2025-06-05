@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace Assignment
 {
-    public class Calculator
+    public class Parameter
     {
         public List<Discount> getListDiscount(string Path)
         {
             var ListDiscount = new List<Discount>();
-
             var DiscountPath = Path + "\\Discount.json";
 
             bool existDiscount = false;
@@ -27,6 +26,10 @@ namespace Assignment
                     Console.Write("Do you put your discount? [Y/N]: ");
                     existDiscount = Console.ReadLine().ToUpper() == "Y" ? true : false;
                 }
+                else
+                {
+                    existDiscount = true;
+                }
 
                 if (existDiscount)
                 {
@@ -36,7 +39,27 @@ namespace Assignment
             }
             catch (Exception ex)
             {
-
+                var AllDiscountParameter = new string[] { "Campaign", "DiscountType", "DiscountAmount", "Condition" };
+                var errorparameter = string.Empty;
+                foreach (var a in AllDiscountParameter)
+                {
+                    if (ex.Message.Contains(a))
+                    {
+                        errorparameter = a;
+                        break;
+                    }
+                }
+                if (!string.IsNullOrEmpty(errorparameter))
+                {
+                    Discount ParaDict = new Discount();
+                    var inputtype = ParaDict.DiscountParaType[errorparameter];
+                    Console.WriteLine("Please set parameter " + errorparameter + " in type of: "+inputtype.Name);
+                }
+                else
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                Console.ReadLine();
             }
             return ListDiscount;
         }
