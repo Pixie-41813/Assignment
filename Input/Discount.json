@@ -1,0 +1,29 @@
+[
+  {
+    "Campaign": "Fixed Amount",
+    "DiscountType": "Coupon",
+    "DiscountAmount": 100
+  },
+  {
+    "Campaign": "PercentageTotal",
+    "DiscountType": "Coupon",
+    "DiscountAmount": 5
+  },
+  {
+    "Campaign": "PercentageCat",
+    "DiscountType": "OnTop",
+    "DiscountAmount": 10,
+    "Condition":  "Colthing"
+  },
+  {
+    "Campaign": "Points",
+    "DiscountType": "OnTop",
+    "DiscountAmount": 100
+  },
+  {
+    "Campaign": "Special",
+    "DiscountType": "Season",
+    "DiscountAmount": 30,
+    "Condition": "400"
+  }
+]

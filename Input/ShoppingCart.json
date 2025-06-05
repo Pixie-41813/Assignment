@@ -1,0 +1,44 @@
+[
+  {
+    "Category": "Clothing",
+    "ItemName": "Shirt",
+    "Price": 1490,
+    "Amount": 1
+  },
+  {
+    "Category": "Clothing",
+    "ItemName": "Hoodie",
+    "Price": 1290,
+    "Amount": 1
+  },
+  {
+    "Category": "Accessories",
+    "ItemName": "Glasses",
+    "Price": 500,
+    "Amount": 1
+  },
+  {
+    "Category": "Accessories",
+    "ItemName": "Hat",
+    "Price": 350,
+    "Amount": 1
+  },
+  {
+    "Category": "Accessories",
+    "ItemName": "Ring",
+    "Price": 360,
+    "Amount": 1
+  },
+  {
+    "Category": "Clothing",
+    "ItemName": "Sneakers",
+    "Price": 2950,
+    "Amount": 1
+  },
+  {
+    "Category": "Gadget",
+    "ItemName": "SmartWatch",
+    "Price": 5990,
+    "Amount": 1
+  }
+]
