@@ -12,7 +12,6 @@ namespace Assignment.Class
         public string DiscountType { get; set; }
         public int DiscountAmount { get; set; }
         public string Condition { get; set; }
-
         public Dictionary<string, Type> DiscountParaType { get; }
         public Discount()
         {

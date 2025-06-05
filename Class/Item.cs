@@ -12,5 +12,16 @@ namespace Assignment.Class
         public string ItemName { get; set; }
         public double Price { get; set; }
         public int Amount { get; set; }
+        public Dictionary<string, Type> ItemParaType { get; }
+        public Item()
+        {
+            ItemParaType = new Dictionary<string, Type>
+            {
+                { nameof(Category),typeof(string)},
+                { nameof(ItemName),typeof(string)},
+                { nameof(Price),typeof(int)},
+                { nameof(Amount),typeof(int)},
+            };
+        }
     }
 }

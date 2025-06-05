@@ -11,19 +11,18 @@ namespace Assignment
 {
     public class Parameter
     {
-        public List<Discount> getListDiscount(string Path)
+        public List<Discount> getListParameter(string Path)
         {
             var ListDiscount = new List<Discount>();
             var DiscountPath = Path + "\\Discount.json";
-
             bool existDiscount = false;
-
             try
             {
                 if (!File.Exists(DiscountPath))
                 {
                     Console.WriteLine("Please Save Discount.json File to " + Path + ", or you will not get discount.");
-                    Console.Write("Do you put your discount? [Y/N]: ");
+                    Console.WriteLine("Do you put your discount? [Y/N]");
+                    Console.WriteLine("If you prefer not to use discount, please enter \"Y\"");
                     existDiscount = Console.ReadLine().ToUpper() == "Y" ? true : false;
                 }
                 else
@@ -34,8 +33,8 @@ namespace Assignment
                 if (existDiscount)
                 {
                     var Readjson = File.ReadAllText(DiscountPath);
-                    ListDiscount = JsonSerializer.Deserialize<List<Discount>>(Readjson);                    
-                }               
+                    ListDiscount = JsonSerializer.Deserialize<List<Discount>>(Readjson);
+                }
             }
             catch (Exception ex)
             {
@@ -53,7 +52,7 @@ namespace Assignment
                 {
                     Discount ParaDict = new Discount();
                     var inputtype = ParaDict.DiscountParaType[errorparameter];
-                    Console.WriteLine("Please set parameter " + errorparameter + " in type of: "+inputtype.Name);
+                    Console.WriteLine("Please set parameter " + errorparameter + " in type of: " + inputtype.Name);
                 }
                 else
                 {
@@ -67,6 +66,22 @@ namespace Assignment
         public List<Item> getListItem(string Path)
         {
             var ListItem = new List<Item>();
+            var ShoppingCartPath = Path + "\\ShoppingCart.json";
+            bool existItemList = false;
+            try
+            {
+                while (!File.Exists(ShoppingCartPath))
+                {
+                    Console.WriteLine("Please select item with your prefer.");
+                    Console.Write("Do you update your shipping cart? [Y/N]: ");
+                    existItemList = Console.ReadLine().ToUpper() == "Y" ? true : false;
+                }                
+                
+            }
+            catch (Exception ex)
+            {
+
+            }
             return ListItem;
         }
     }
