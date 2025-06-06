@@ -189,10 +189,9 @@ namespace Assignment
             return iscorrected;
         }
 
-        public Dictionary<string, double> getDictGoodsPrice(string Path)
+        public Dictionary<string, double> getDictGoodsPrice(string Path, Dictionary<string, double> DictGoodsPrice)
         {
-            var ListItem = new List<Item>();
-            var DictGoodsPrice = new Dictionary<string, double>();
+            var ListItem = new List<Item>();            
             var ShoppingCartPath = Path + "\\ShoppingCart.json";
             var result = false;
             do

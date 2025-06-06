@@ -21,7 +21,7 @@ namespace Assignment.Class
             {
                 var projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)?.Parent?.Parent?.FullName;
                 var fullPath = Path.Combine(projectRoot ?? "", ParameterPath);
-                DictGoodsPrice = parameter.getDictGoodsPrice(fullPath);
+                parameter.getDictGoodsPrice(fullPath, DictGoodsPrice);
                 var ListDiscount = new List<Discount>();
                 if (DictGoodsPrice.Count() != 0)
                 {
@@ -42,8 +42,10 @@ namespace Assignment.Class
                 DictDiscountPrice.Add(a.Key, 0);
             }
 
+            var CurrentDiscount = DictDiscountPrice;
+
             foreach (var discounttype in TotalDiscountType)
-            {
+            {                
                 if (ListDiscount.Any(a => a.DiscountType == discounttype))
                 {
                     var discountdetail = ListDiscount.Where(w => w.DiscountType == discounttype).Select(s => s).FirstOrDefault();
@@ -51,22 +53,61 @@ namespace Assignment.Class
                     {
                         if (discountdetail.Campaign == "Fix Amount")
                         {
-                            var AvgDiscountPerCat = discountdetail.DiscountAmount / (DictDiscountPrice.Keys.Count() - 1);
+                            var AvgDiscountPerCat = Math.Round(Convert.ToDouble(discountdetail.DiscountAmount / (DictDiscountPrice.Keys.Count() - 1)), 2);
                             foreach (var dis in DictDiscountPrice)
                             {
                                 if (dis.Key == "Total")
                                 {
                                     DictDiscountPrice[dis.Key] += discountdetail.DiscountAmount;
+                                    CurrentDiscount[dis.Key] = discountdetail.DiscountAmount;
                                 }
                                 else
                                 {
                                     DictDiscountPrice[dis.Key] += AvgDiscountPerCat;
+                                    CurrentDiscount[dis.Key] = AvgDiscountPerCat;
                                 }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var dis in DictDiscountPrice)
+                            {
+                                DictDiscountPrice[dis.Key] += Math.Round(Convert.ToDouble((DictGoodsPrice[dis.Key] * discountdetail.DiscountAmount) / 100.0));
+                                CurrentDiscount[dis.Key] = Math.Round(Convert.ToDouble((DictGoodsPrice[dis.Key] * discountdetail.DiscountAmount) / 100.0));
+                            }
+                        }
+                    }
+                    else if (discounttype == "OnTop")
+                    {
+                        if (discountdetail.Campaign == "PercentageCat")
+                        {
+                            var GoodsDiscount = discountdetail.Condition.Split(',');
+                            foreach (var a in GoodsDiscount)
+                            {
+                                DictDiscountPrice[a] += Math.Round(Convert.ToDouble((DictGoodsPrice[a] * discountdetail.DiscountAmount) / 100.0));
+                                DictDiscountPrice["Total"] += Math.Round(Convert.ToDouble((DictGoodsPrice[a] * discountdetail.DiscountAmount) / 100.0));
+
+                                CurrentDiscount[a] = Math.Round(Convert.ToDouble((DictGoodsPrice[a] * discountdetail.DiscountAmount) / 100.0));
+                                CurrentDiscount["Total"] = Math.Round(Convert.ToDouble((DictGoodsPrice[a] * discountdetail.DiscountAmount) / 100.0));
+                            }
+                        }
+                        else
+                        {
+                            var CapDiscount = DictGoodsPrice["Total"] * 0.2;
+                            var realDiscount = CapDiscount;
+                            if (discountdetail.DiscountAmount >= CapDiscount)
+                            {
+
                             }
                         }
                     }
                 }
             }
+        }
+
+        public void UpdateDictGoodsPrice()
+        {
+
         }
     }
 }
