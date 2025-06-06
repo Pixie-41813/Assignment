@@ -13,8 +13,10 @@ namespace Assignment
     {    
         static void Main(string[] args)
         {
+            var DictGoodsPrice = new Dictionary<string, double>();
+            var DictDiscountPrice = new Dictionary<string, double>();
             Calculator cal = new Calculator();
-            cal.CalculateTotalPrice();
+            cal.getDetailforCalculate(DictGoodsPrice, DictDiscountPrice);
         }      
     }
 }

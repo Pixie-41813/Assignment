@@ -203,15 +203,18 @@ namespace Assignment
                     {
                         var JsonReadText = File.ReadAllText(ShoppingCartPath);
                         ListItem = JsonSerializer.Deserialize<List<Item>>(JsonReadText);
+                        var TotalAllAmount = 0.0;
                         foreach (var a in GoodsCategory)
                         {
                             var Item = ListItem.Where(w => w.Category == a).Select(s => s).ToList();
                             if (Item.Count > 0)
                             {
                                 var TotalAmount = Item.Select(s => s.Amount * s.Price).Sum();
+                                TotalAllAmount += TotalAmount;
                                 DictGoodsPrice.Add(a, TotalAmount);
-                            }                            
+                            }
                         }
+                        DictGoodsPrice.Add("Total", TotalAllAmount);
                         result = true;
                     }
                     else
@@ -246,7 +249,7 @@ namespace Assignment
                                             {
                                                 DictGoodsPrice = new Dictionary<string, double>();
                                                 result = true;
-                                            }                                           
+                                            }
                                         }
                                     } while (!isexitprogram);
                                 }
