@@ -11,56 +11,143 @@ namespace Assignment
 {
     public class Parameter
     {
-        public List<Discount> getListParameter(string Path)
+        public string[] TotalDiscountType;
+        public string[] GoodsCategory;
+
+        public Parameter(string[] DiscountType, string[] GoodsCategory)
+        {
+            this.TotalDiscountType = DiscountType;
+            this.GoodsCategory = GoodsCategory;
+        }
+
+        public List<Discount> getListDiscount(string Path)
         {
             var ListDiscount = new List<Discount>();
             var DiscountPath = Path + "\\Discount.json";
-            bool existDiscount = false;
-            try
+            bool result = false;
+            do
             {
-                if (!File.Exists(DiscountPath))
+                var cnt = 0;
+                try
                 {
-                    Console.WriteLine("Please Save Discount.json File to " + Path + ", or you will not get discount.");
-                    Console.WriteLine("Do you put your discount? [Y/N]");
-                    Console.WriteLine("If you prefer not to use discount, please enter \"Y\"");
-                    existDiscount = Console.ReadLine().ToUpper() == "Y" ? true : false;
-                }
-                else
-                {
-                    existDiscount = true;
-                }
-
-                if (existDiscount)
-                {
-                    var Readjson = File.ReadAllText(DiscountPath);
-                    ListDiscount = JsonSerializer.Deserialize<List<Discount>>(Readjson);
-                }
-            }
-            catch (Exception ex)
-            {
-                var AllDiscountParameter = new string[] { "Campaign", "DiscountType", "DiscountAmount", "Condition" };
-                var errorparameter = string.Empty;
-                foreach (var a in AllDiscountParameter)
-                {
-                    if (ex.Message.Contains(a))
+                    if (File.Exists(DiscountPath))
                     {
-                        errorparameter = a;
+                        var JsonReadText = File.ReadAllText(DiscountPath);
+                        ListDiscount = JsonSerializer.Deserialize<List<Discount>>(JsonReadText);
+                        if (isListDiscountCorrect(ListDiscount))
+                        {
+                            result = true;
+                        }                                  
+                    }
+                    else
+                    {
+                        if (cnt > 0)
+                        {
+                            ListDiscount = new List<Discount>();
+                            result = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Do you have a dissount?");
+                            Console.WriteLine("Please put discount file at " + Path + ".");
+                            Console.WriteLine("Then Please press Enter to continue.");
+                            Console.ReadLine();
+                            cnt++;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Discount discount = new Discount();
+                    var errorparameter = string.Empty;
+                    foreach (var a in discount.DiscountParaType)
+                    {
+                        if (ex.Message.Contains(a.Key))
+                        {
+                            errorparameter = a.Key;
+                            break;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(errorparameter))
+                    {
+                        Console.WriteLine("Please fill value of " + errorparameter + " in type of " + discount.DiscountParaType[errorparameter].Name);
+                    }
+                    else
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    Console.WriteLine("Please update you discount file.");
+                    Console.WriteLine("Please Enter after revise the file.");
+                    Console.ReadLine();
+                }
+            } while (!result);
+            return ListDiscount;
+        }
+
+        private bool isDupDiscountType(List<Discount> ListDiscount)
+        {
+            var isDup = false;
+            if (ListDiscount.Count <= TotalDiscountType.Length)
+            {
+                foreach (var a in TotalDiscountType)
+                {
+                    var Typecount = ListDiscount.Where(w => w.DiscountType == a).Count();
+                    if (Typecount > 1)
+                    {
+                        isDup = true;
                         break;
                     }
                 }
-                if (!string.IsNullOrEmpty(errorparameter))
+            }
+            else
+            {
+                isDup = true;
+            }
+            return isDup;
+        }
+
+        private bool isCorrectedGoodsCategory(List<Discount> ListDiscount)
+        {
+            var isCorrect = true;
+            var TotalTypeOntop = ListDiscount.Where(w => w.Campaign == "PercentageCat").Select(s => s).FirstOrDefault().Condition.Split(',');
+            foreach (var a in TotalTypeOntop)
+            {
+                if (!GoodsCategory.Contains(a))
                 {
-                    Discount ParaDict = new Discount();
-                    var inputtype = ParaDict.DiscountParaType[errorparameter];
-                    Console.WriteLine("Please set parameter " + errorparameter + " in type of: " + inputtype.Name);
+                    isCorrect = false;
+                    break;
+                }
+            }
+            return isCorrect;
+        }
+
+        private bool isListDiscountCorrect(List<Discount> ListDiscount)
+        {
+            var iscorrected = false;
+            if (isDupDiscountType(ListDiscount))
+            {
+                Console.WriteLine("Please remove duplicate discount type.");
+                Console.WriteLine("Press Enter after revise.");
+                Console.ReadLine();
+            }
+            else if (ListDiscount.Any(a => a.Campaign == "PercentageCat"))
+            {
+                if (!isCorrectedGoodsCategory(ListDiscount))
+                {
+                    Console.WriteLine("Please check goods type in parameter condition of Campaign PercentageCat");
+                    Console.WriteLine("Press Enter after revise.");
+                    Console.ReadLine();                   
                 }
                 else
                 {
-                    Console.WriteLine(ex.Message);
+                    iscorrected = true;
                 }
-                Console.ReadLine();
             }
-            return ListDiscount;
+            else
+            {
+                iscorrected = true;
+            }
+            return iscorrected;
         }
 
         public List<Item> getListItem(string Path)
@@ -75,8 +162,8 @@ namespace Assignment
                     Console.WriteLine("Please select item with your prefer.");
                     Console.Write("Do you update your shipping cart? [Y/N]: ");
                     existItemList = Console.ReadLine().ToUpper() == "Y" ? true : false;
-                }                
-                
+                }
+
             }
             catch (Exception ex)
             {

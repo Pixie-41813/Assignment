@@ -40,5 +40,11 @@
     "ItemName": "SmartWatch",
     "Price": 5990,
     "Amount": 1
+  },
+  {
+    "Category": "Cosmetic",
+    "ItemName": "Lipstick",
+    "Price": 1990,
+    "Amount": 1
   }
 ]

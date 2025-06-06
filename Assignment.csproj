@@ -86,6 +86,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Input\Discount.json" />
+    <None Include="Input\DiscountMaster.json" />
     <None Include="Input\ShoppingCart.json" />
     <None Include="packages.config" />
   </ItemGroup>
