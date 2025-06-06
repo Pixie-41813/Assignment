@@ -25,9 +25,10 @@ namespace Assignment
             var ListDiscount = new List<Discount>();
             var DiscountPath = Path + "\\Discount.json";
             bool result = false;
+            var cnt = 0;
+
             do
             {
-                var cnt = 0;
                 try
                 {
                     if (File.Exists(DiscountPath))
@@ -37,22 +38,60 @@ namespace Assignment
                         if (isListDiscountCorrect(ListDiscount))
                         {
                             result = true;
-                        }                                  
+                        }
                     }
                     else
                     {
                         if (cnt > 0)
                         {
-                            ListDiscount = new List<Discount>();
-                            result = true;
+                            Console.WriteLine("We cannot find your Discouint file.");
+                            var isCorrecttedKey = false;
+                            do
+                            {
+                                Console.WriteLine("Do you still want to add discount? [Y/N]");
+                                var ans = Console.ReadLine().ToUpper();
+                                if (ans == "Y" || ans == "N")
+                                {
+                                    isCorrecttedKey = true;
+                                    if (ans == "Y")
+                                    {
+                                        cnt++;
+                                        Console.WriteLine("Please press Enter after place the file.");
+                                        Console.ReadLine();
+                                    }
+                                    else
+                                    {
+                                        ListDiscount = new List<Discount>();
+                                        result = true;
+                                    }
+                                }
+                            } while (!isCorrecttedKey);
                         }
                         else
                         {
                             Console.WriteLine("Do you have a dissount?");
                             Console.WriteLine("Please put discount file at " + Path + ".");
-                            Console.WriteLine("Then Please press Enter to continue.");
-                            Console.ReadLine();
-                            cnt++;
+                            var isCorrecttedKey = false;
+                            do
+                            {
+                                Console.Write("Press \"Y\" if Yes, Press \"N\" if No: ");
+                                var ans = Console.ReadLine().ToUpper();
+                                if (ans == "Y" || ans == "N")
+                                {
+                                    isCorrecttedKey = true;
+                                    if (ans == "Y")
+                                    {
+                                        cnt++;
+                                        Console.WriteLine("Please press Enter after place the file.");
+                                        Console.ReadLine();
+                                    }
+                                    else
+                                    {
+                                        ListDiscount = new List<Discount>();
+                                        result = true;
+                                    }
+                                }
+                            } while (!isCorrecttedKey);
                         }
                     }
                 }
@@ -134,9 +173,9 @@ namespace Assignment
             {
                 if (!isCorrectedGoodsCategory(ListDiscount))
                 {
-                    Console.WriteLine("Please check goods type in parameter condition of Campaign PercentageCat");
+                    Console.WriteLine("Please check goods type in parameter condition of campaign PercentageCat");
                     Console.WriteLine("Press Enter after revise.");
-                    Console.ReadLine();                   
+                    Console.ReadLine();
                 }
                 else
                 {
