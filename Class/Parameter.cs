@@ -48,7 +48,7 @@ namespace Assignment
                             var isCorrecttedKey = false;
                             do
                             {
-                                Console.WriteLine("Do you still want to add discount? [Y/N]");
+                                Console.Write("Do you still want to add discount? [Y/N]");
                                 var ans = Console.ReadLine().ToUpper();
                                 if (ans == "Y" || ans == "N")
                                 {
@@ -69,7 +69,7 @@ namespace Assignment
                         }
                         else
                         {
-                            Console.WriteLine("Do you have a dissount?");
+                            Console.WriteLine("Do you have a dicount?");
                             Console.WriteLine("Please put discount file at " + Path + ".");
                             var isCorrecttedKey = false;
                             do
@@ -109,13 +109,13 @@ namespace Assignment
                     }
                     if (!string.IsNullOrEmpty(errorparameter))
                     {
-                        Console.WriteLine("Please fill value of " + errorparameter + " in type of " + discount.DiscountParaType[errorparameter].Name);
+                        Console.WriteLine("Please revise your discount file at parameter " + errorparameter + " to a type of " + discount.DiscountParaType[errorparameter].Name);
                     }
                     else
                     {
                         Console.WriteLine(ex.Message);
+                        Console.WriteLine("Please revise your discount file.");
                     }
-                    Console.WriteLine("Please update you discount file.");
                     Console.WriteLine("Please Enter after revise the file.");
                     Console.ReadLine();
                 }
@@ -189,26 +189,97 @@ namespace Assignment
             return iscorrected;
         }
 
-        public List<Item> getListItem(string Path)
+        public Dictionary<string, double> getDictGoodsPrice(string Path)
         {
             var ListItem = new List<Item>();
+            var DictGoodsPrice = new Dictionary<string, double>();
             var ShoppingCartPath = Path + "\\ShoppingCart.json";
-            bool existItemList = false;
-            try
+            var result = false;
+            do
             {
-                while (!File.Exists(ShoppingCartPath))
+                try
                 {
-                    Console.WriteLine("Please select item with your prefer.");
-                    Console.Write("Do you update your shipping cart? [Y/N]: ");
-                    existItemList = Console.ReadLine().ToUpper() == "Y" ? true : false;
+                    if (File.Exists(ShoppingCartPath))
+                    {
+                        var JsonReadText = File.ReadAllText(ShoppingCartPath);
+                        ListItem = JsonSerializer.Deserialize<List<Item>>(JsonReadText);
+                        foreach (var a in GoodsCategory)
+                        {
+                            var Item = ListItem.Where(w => w.Category == a).Select(s => s).ToList();
+                            if (Item.Count > 0)
+                            {
+                                var TotalAmount = Item.Select(s => s.Amount * s.Price).Sum();
+                                DictGoodsPrice.Add(a, TotalAmount);
+                            }                            
+                        }
+                        result = true;
+                    }
+                    else
+                    {
+                        var isCorrectedKey = false;
+                        Console.WriteLine("Do you have a shipping cart file?");
+                        do
+                        {
+                            Console.Write("Press \"Y\" if Yes, Press \"N\" if No: ");
+                            var ans = Console.ReadLine().ToUpper();
+                            if (ans == "Y" || ans == "N")
+                            {
+                                isCorrectedKey = true;
+                                if (ans == "Y")
+                                {
+                                    Console.WriteLine("Please put your shipping cart file at " + Path + ".");
+                                    Console.WriteLine("Press Enter after put file in the location.");
+                                    Console.ReadLine();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Do you confirm to exit program");
+                                    var isexitprogram = false;
+                                    do
+                                    {
+                                        Console.Write("Press \"Y\" if Yes, Press \"N\" if No: ");
+                                        ans = Console.ReadLine().ToUpper();
+                                        if (ans == "Y" || ans == "N")
+                                        {
+                                            isexitprogram = true;
+                                            if (ans == "Y")
+                                            {
+                                                DictGoodsPrice = new Dictionary<string, double>();
+                                                result = true;
+                                            }                                           
+                                        }
+                                    } while (!isexitprogram);
+                                }
+                            }
+                        } while (!isCorrectedKey);
+                    }
                 }
-
-            }
-            catch (Exception ex)
-            {
-
-            }
-            return ListItem;
+                catch (Exception ex)
+                {
+                    Item item = new Item();
+                    var errorparameter = string.Empty;
+                    foreach (var a in item.ItemParaType)
+                    {
+                        if (ex.Message.Contains(a.Key))
+                        {
+                            errorparameter = a.Key;
+                            break;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(errorparameter))
+                    {
+                        Console.WriteLine("Please revise your shopping cart file at " + errorparameter + " to a type of " + item.ItemParaType[errorparameter].Name);
+                    }
+                    else
+                    {
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine("Please revise your shopping cart file.");
+                    }
+                    Console.WriteLine("Please Enter after revise the file.");
+                    Console.ReadLine();
+                }
+            } while (!result);
+            return DictGoodsPrice;
         }
     }
 }

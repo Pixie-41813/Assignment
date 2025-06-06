@@ -130,9 +130,9 @@ D:\Pixie\TestProject\TestingImportFile\Assignment\bin\Debug\ru\Microsoft.VisualS
 D:\Pixie\TestProject\TestingImportFile\Assignment\bin\Debug\tr\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
 D:\Pixie\TestProject\TestingImportFile\Assignment\bin\Debug\zh-Hans\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
 D:\Pixie\TestProject\TestingImportFile\Assignment\bin\Debug\zh-Hant\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
-D:\Pixie\TestProject\TestingImportFile\Assignment\obj\Debug\Assignment.csprojAssemblyReference.cache
 D:\Pixie\TestProject\TestingImportFile\Assignment\obj\Debug\Assignment.exe.config
 D:\Pixie\TestProject\TestingImportFile\Assignment\obj\Debug\Assignment.csproj.CoreCompileInputs.cache
 D:\Pixie\TestProject\TestingImportFile\Assignment\obj\Debug\Assignment.csproj.CopyComplete
 D:\Pixie\TestProject\TestingImportFile\Assignment\obj\Debug\Assignment.exe
 D:\Pixie\TestProject\TestingImportFile\Assignment\obj\Debug\Assignment.pdb
+D:\Pixie\TestProject\TestingImportFile\Assignment\obj\Debug\Assignment.csprojAssemblyReference.cache

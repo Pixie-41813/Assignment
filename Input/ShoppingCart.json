@@ -2,49 +2,49 @@
   {
     "Category": "Clothing",
     "ItemName": "Shirt",
-    "Price": 1490,
+    "Price": 790,
     "Amount": 1
   },
   {
     "Category": "Clothing",
-    "ItemName": "Hoodie",
+    "ItemName": "Pants",
     "Price": 1290,
     "Amount": 1
   },
   {
-    "Category": "Accessories",
-    "ItemName": "Glasses",
-    "Price": 500,
-    "Amount": 1
-  },
-  {
-    "Category": "Accessories",
-    "ItemName": "Hat",
-    "Price": 350,
-    "Amount": 1
+    "Category": "Clothing",
+    "ItemName": "T-Shirt",
+    "Price": 390,
+    "Amount": 2
   },
   {
     "Category": "Accessories",
     "ItemName": "Ring",
-    "Price": 360,
+    "Price": 300,
     "Amount": 1
   },
   {
-    "Category": "Clothing",
-    "ItemName": "Sneakers",
-    "Price": 2950,
+    "Category": "Accessories",
+    "ItemName": "Braclet",
+    "Price": 590,
     "Amount": 1
   },
   {
     "Category": "Gadget",
-    "ItemName": "SmartWatch",
+    "ItemName": "Smart Watch",
+    "Price": 5990,
+    "Amount": 1
+  },
+  {
+    "Category": "Gadget",
+    "ItemName": "Wireless Earplug",
     "Price": 5990,
     "Amount": 1
   },
   {
     "Category": "Cosmetic",
-    "ItemName": "Lipstick",
-    "Price": 1990,
-    "Amount": 1
+    "ItemName": "Libstick",
+    "Price": 890,
+    "Amount": 2
   }
 ]
